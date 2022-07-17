@@ -7,6 +7,10 @@ import Footer from './Components/Footer'
 import Header from './Components/Header'
 import Home from './Components/Home'
 import Login from './Components/Login/Login'
+import LoginCreate from './Components/Login/LoginCreate'
+import LoginForm from './Components/Login/LoginForm'
+import LoginPasswordLost from './Components/Login/LoginPasswordLost'
+import LoginPasswordReset from './Components/Login/LoginPasswordReset'
 
 
 
@@ -16,9 +20,14 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='*' element={<Home/>}/>
+          <Route path='/' element={<Home />} />
+          <Route path='/login/*' element={<Login />}>
+            <Route path='' element={<LoginForm />} />
+            <Route path='criar' element={<LoginCreate />} />
+            <Route path='perdeu' element={<LoginPasswordLost />} />
+            <Route path='resetar' element={<LoginPasswordReset />} />
+          </Route>
+          <Route path='*' element={<Home />} />
         </Routes>
         <Footer />
       </BrowserRouter>
