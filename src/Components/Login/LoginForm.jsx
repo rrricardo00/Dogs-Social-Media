@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TOKEN_POST } from '../../api'
+import { TOKEN_POST, USER_GET } from '../../api'
 import useForm from '../../Hooks/useForm'
 import Button from './Forms/Button'
 import Input from './Forms/Input'
@@ -10,6 +10,21 @@ const LoginForm = () => {
   const username = useForm()
   const password = useForm()
 
+  React.useEffect(() =>{
+    const token = window.localStorage.getItem('token')
+    
+    token && getUser(token)
+  },  [])
+
+  const getUser = async(token) => {
+
+    const { url, options } = USER_GET(token)
+
+    const response = await fetch(url, options)
+    const json = await response.json()
+    console.log(json)
+  }
+
   const handleSubmit = async(target) => {
     target.preventDefault()
     if (username.validate() && password.validate()) {
@@ -18,7 +33,8 @@ const LoginForm = () => {
 
       const response = await fetch(url, options)
       const json = await response.json()
-      console.log(json)
+      window.localStorage.setItem('token', json.token)
+      getUser(json.token)
 
     }
   }

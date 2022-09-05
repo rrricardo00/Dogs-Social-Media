@@ -10,3 +10,13 @@ export const TOKEN_POST = (body) =>{
             }   
         }
 }
+
+export const USER_GET = (token) =>{
+    return{
+        url: API_URL + '/api/user',
+        options: {
+            method: 'get',
+            headers: {'Authorization': `Bearer ${token}`}
+        }   
+    }
+}
